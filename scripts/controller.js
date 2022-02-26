@@ -17,14 +17,16 @@ window.Controller = class Controller {
   onCellClicked(row, col) {
     if (this.model.getCurrentGame()[row][col] === null) {
       this.model.cellMarked(row, col);
+      if (this.#checkForWin()) {
+        this.model.setWinner();
+      } else if (this.#checkForDraw()) {
+        this.model.setDraw();
+      } else {
+        this.model.switchPlayer();
+      }
     }
-    if (this.#checkForWin()) {
-      this.model.setWinner();
-    } else if (this.#checkForDraw()) {
-      this.model.setDraw();
-    } else {
-      this.model.switchPlayer();
-    }
+
+
   }
 
   #checkForWin() {

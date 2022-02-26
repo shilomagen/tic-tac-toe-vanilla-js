@@ -34,7 +34,9 @@ window.Model = class Model {
   }
 
   switchPlayer() {
-    this.state.currentPlayer = this.state.currentPlayer === 'X' ? 'Y' : 'X';
+    if (!this.state.gameEnded) {
+      this.state.currentPlayer = this.state.currentPlayer === 'X' ? 'Y' : 'X';
+    }
     this.notifyAll();
   }
 
