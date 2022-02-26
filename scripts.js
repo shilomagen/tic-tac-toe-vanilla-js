@@ -3,16 +3,9 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function onLoad() {
-  document.querySelectorAll('.cell').forEach(function (cell) {
-    cell.addEventListener('click', onCellClick);
-  });
-  changeH1Color();
-}
-
-function onCellClick(event) {
-  event.target.classList.toggle('green-cell');
-}
-
-function changeH1Color() {
-  document.querySelector('h1').style.color = 'red';
+  const model = new window.Model();
+  const controller = new window.Controller(model);
+  const view = new window.View(controller);
+  model.subscribeToChanges(newState => view.render(newState));
+  view.render(model.state);
 }
