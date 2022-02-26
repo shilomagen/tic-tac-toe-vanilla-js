@@ -6,11 +6,35 @@ window.View = class View {
   render(model) {
     document.querySelector('#app').innerHTML = `
     <section>
-      ${this.#getCurrentPlayer(model.currentPlayer)}
-      ${this.#getTable(model.currentGame)}
+      ${this.#getBoard(model)}
     </section>`;
 
     this.#addEventListeners();
+  }
+
+  #getBoard(model) {
+    const isDraw = model.gameEnded && model.winner === null;
+    if (isDraw) {
+      return this.#getDraw();
+    } else {
+      if (model.winner) {
+        return this.#getWinner(model.winner);
+      } else {
+        return this.#getTable(model.currentGame, model.currentPlayer);
+      }
+    }
+  }
+
+  #getDraw() {
+    return `
+    <h2>Draw</h2>
+    `;
+  }
+
+  #getWinner(winner) {
+    return `
+      <h2>And the winner is ${winner}</h2>
+    `;
   }
 
   #getCurrentPlayer(currentPlayer) {
@@ -19,9 +43,10 @@ window.View = class View {
     `;
   }
 
-  #getTable(game) {
+  #getTable(game, currentPlayer) {
     return `
     <section>
+    ${this.#getCurrentPlayer(currentPlayer)}
       <table>
         <tbody>
           ${game.map((row, index) => this.#getRow(row, index)).join('')}    

@@ -17,6 +17,17 @@ window.Model = class Model {
     this.observers.push(fn);
   }
 
+  setDraw() {
+    this.state.gameEnded = true;
+    this.notifyAll();
+  }
+
+  setWinner() {
+    this.state.winner = this.state.currentPlayer;
+    this.state.gameEnded = true;
+    this.notifyAll();
+  }
+
   cellMarked(row, col) {
     this.state.currentGame[row][col] = this.state.currentPlayer;
     this.notifyAll();

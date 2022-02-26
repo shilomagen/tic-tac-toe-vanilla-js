@@ -15,8 +15,26 @@ window.Controller = class Controller {
   }
 
   onCellClicked(row, col) {
-    this.model.cellMarked(row, col);
-    this.model.switchPlayer();
+    if (this.model.getCurrentGame()[row][col] === null) {
+      this.model.cellMarked(row, col);
+    }
+    if (this.#checkForWin()) {
+      this.model.setWinner();
+    } else if (this.#checkForDraw()) {
+      this.model.setDraw();
+    } else {
+      this.model.switchPlayer();
+    }
+  }
+
+  #checkForWin() {
+    const currentGame = this.model.getCurrentGame().flat();
+    return WinningLines.some(l => currentGame[l[0]] && currentGame[l[0]] === currentGame[l[1]] && currentGame[l[1]] === currentGame[l[2]]);
+  }
+
+  #checkForDraw() {
+    const currentGame = this.model.getCurrentGame().flat();
+    return currentGame.every(char => char !== null);
   }
 
 };
