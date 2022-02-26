@@ -1,9 +1,16 @@
 document.addEventListener('DOMContentLoaded', function () {
-  onLoad()
+  onLoad();
 });
 
 function onLoad() {
-  changeH1Color()
+  document.querySelectorAll('.cell').forEach(function (cell) {
+    cell.addEventListener('click', onCellClick);
+  });
+  changeH1Color();
+}
+
+function onCellClick(event) {
+  event.target.classList.toggle('green-cell');
 }
 
 function changeH1Color() {

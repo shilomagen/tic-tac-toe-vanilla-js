@@ -12,3 +12,6 @@ table td {
     height: 75px;
 }
 
+.green-cell {
+    background-color: green;
+}
